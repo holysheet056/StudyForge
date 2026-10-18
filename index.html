@@ -64,4 +64,9 @@ function makeRoomSlug(){return 'StudyForge-'+Math.random().toString(36).slice(2,
 function createStudyRoom(){const title=(document.getElementById('roomTitle').value.trim()||'StudyForge Study Room').slice(0,50);const duration=Math.max(1,Math.min(180,Math.floor(Number(document.getElementById('roomDuration').value)||25)));const slug=makeRoomSlug();const url='https://meet.jit.si/'+encodeURIComponent(slug);try{localStorage.setItem('studyforge-last-room',JSON.stringify({title,slug,url,duration,createdAt:new Date().toISOString()}))}catch(e){}const msg=`Room: ${title}\nCode: ${slug}\nLink: ${url}\nFocus goal: ${duration} minutes`;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(msg).catch(()=>{});window.open(url,'_blank','noopener,noreferrer');toast('Room opened. Share its link with trusted friends.')}
 function joinStudyRoom(){const raw=document.getElementById('joinRoomCode').value.trim();if(!raw){toast('Paste a room code or link first.');return}let url;if(/^https:\/\//i.test(raw)){try{const parsed=new URL(raw);if(!/(^|\.)meet\.jit\.si$/i.test(parsed.hostname)){toast('For safety, use a Jitsi Meet link or a room code.');return}url=parsed.href}catch(e){toast('That link does not look valid.');return}}else{const slug=raw.replace(/^#/, '').replace(/[^a-zA-Z0-9_-]/g,'');if(slug.length<3||slug.length>100){toast('Check the room code and try again.');return}url='https://meet.jit.si/'+encodeURIComponent(slug)}window.open(url,'_blank','noopener,noreferrer');toast('Opening your study room…')}
 renderRoomTasks();
-</script></body></html>
+</script>
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body></html>
